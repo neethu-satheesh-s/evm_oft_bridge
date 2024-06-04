@@ -14,7 +14,7 @@ module.exports = {
   defaultNetwork: 'hardhat',
   networks: {
     'bsc-testnet': {
-      url: 'https://data-seed-prebsc-1-s1.bnbchain.org:8545',
+      url: 'https://data-seed-prebsc-1-s1.bnbchain.org:8545', // https://public.stackup.sh/api/v1/node/bsc-testnet
       chainId: 97,
       gasPrice: 20000000000,
       accounts: [PRIVATE_KEY],

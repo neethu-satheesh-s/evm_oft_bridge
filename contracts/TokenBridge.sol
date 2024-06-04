@@ -52,6 +52,14 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
         aptosChainId = _aptosChainId;
     }
 
+    // _token = bnb usdt 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
+    // _toAddress = aptos user wallet address 0x87ab7d47a9b0ac84b856168b68fff06408cc5f1c691a6c5366c3ab116d76d93c
+    // _amountLD = usdt 1
+    // CallParams {
+    // address payable refundAddress; user wallet address - 0x4Aed70Ca724C2c268A4047A89A5d0Ee5Ee3D92ce OR 0
+    // address zroPaymentAddress; - yser wallet address - 0
+    // }
+    // _adapterParams - []
     function sendToAptos(
         address _token,
         bytes32 _toAddress,
@@ -114,6 +122,11 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
         emit Send(address(0), msg.sender, _toAddress, _amountLD);
     }
 
+    // CallParams {
+    // address payable refundAddress; user wallet address - 0x4Aed70Ca724C2c268A4047A89A5d0Ee5Ee3D92ce OR 0
+    // address zroPaymentAddress; - yser wallet address - 0
+    // }
+    // _adapterParams - []
     function quoteForSend(
         LzLib.CallParams calldata _callParams,
         bytes calldata _adapterParams
@@ -132,6 +145,12 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
     }
 
     // ---------------------- owner functions ----------------------
+
+    // BNB USDT : 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
+
+    // setTrustedRemoteAddress => 108  and remote aptos oft bridge 0xbd6ee7be5e61a1827647762ce4ec0c4b53b9f42a1b377a3b862bf2b1af1a019d
+
+    // _token = aptos usdt = 0xea33def69b4bce19afe062e48581d9bc8d7b8d11e154c007a6325f2a45146b53 = the input could be bnb usdt, need to check
     function registerToken(address _token) external onlyOwner {
         require(_token != address(0), "TokenBridge: invalid token address");
         require(
