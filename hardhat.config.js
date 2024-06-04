@@ -13,6 +13,12 @@ const BNB_SCAN_API_KEY = process.env.BNB_SCAN_API_KEY;
 module.exports = {
   defaultNetwork: 'hardhat',
   networks: {
+    'zksync-testnet': {
+      url: 'https://sepolia.era.zksync.dev',
+      chainId: 300,
+      gasPrice: 20000000000,
+      accounts: [PRIVATE_KEY],
+    },
     'bsc-testnet': {
       url: 'https://data-seed-prebsc-1-s1.bnbchain.org:8545', // https://public.stackup.sh/api/v1/node/bsc-testnet
       chainId: 97,
@@ -83,6 +89,7 @@ module.exports = {
       sepolia: API_KEY,
       'bsc-testnet': BNB_SCAN_API_KEY,
       bscTestnet: BNB_SCAN_API_KEY,
+      'zksync-testnet': ETHERSCAN_API_KEY,
     },
     customChains: [],
   },
