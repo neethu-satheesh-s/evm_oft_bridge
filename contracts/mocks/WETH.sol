@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BUSL-1.1
 
-pragma solidity >=0.4.22;
+pragma solidity 0.8.20;
 
 contract WETH {
     string public name = "Wrapped Ether";

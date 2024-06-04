@@ -70,10 +70,14 @@ module.exports = async function ({
     args: args,
     log: true,
     waitConfirmations: 1,
-    skipIfAlreadyDeployed: true,
   });
 
+  //   console.log('contract');
+  //   console.log(contract);
+
   await verify(contract.address, args, 'TokenBridge');
+
+  //   console.log('constructor args:' + contract.interface.encodeDeploy(args));
 };
 
 module.exports.tags = ['TokenBridge'];

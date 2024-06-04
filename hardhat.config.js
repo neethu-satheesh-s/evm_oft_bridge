@@ -3,6 +3,9 @@ require('dotenv').config();
 require('hardhat-contract-sizer');
 require('hardhat-deploy');
 require('@nomicfoundation/hardhat-verify');
+require('@matterlabs/hardhat-zksync-deploy');
+require('@matterlabs/hardhat-zksync-solc');
+
 /** @type import('hardhat/config').HardhatUserConfig */
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const API_KEY = process.env.ETHERSCAN_API_KEY;
@@ -11,30 +14,41 @@ const COIN_MARKET_CAP_API_KEY = process.env.COIN_MARKET_CAP_API_KEY;
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
 const BNB_SCAN_API_KEY = process.env.BNB_SCAN_API_KEY;
 module.exports = {
+  zksolc: {
+    version: 'latest',
+    settings: {},
+  },
   defaultNetwork: 'hardhat',
   networks: {
     'zksync-testnet': {
       url: 'https://sepolia.era.zksync.dev',
+      ethNetwork: 'sepolia',
       chainId: 300,
       gasPrice: 20000000000,
-      accounts: [PRIVATE_KEY],
+      accounts: [PRIVATE_KEY, PRIVATE_KEY],
+      zksync: true,
+      verifyURL:
+        'https://explorer.sepolia.era.zksync.dev/contract_verification',
     },
     'bsc-testnet': {
       url: 'https://data-seed-prebsc-1-s1.bnbchain.org:8545', // https://public.stackup.sh/api/v1/node/bsc-testnet
       chainId: 97,
       gasPrice: 20000000000,
       accounts: [PRIVATE_KEY],
+      zksync: false,
     },
     sepolia: {
       url: SEPOLIA_RPC_URL,
       chainId: 11155111,
       accounts: [PRIVATE_KEY],
       blockConfirmations: 6,
+      zksync: false,
     },
     localhost: {
       url: 'http://127.0.0.1:8545/',
       chainId: 31337,
       blockConfirmations: 1,
+      zksync: false,
     },
     // polygon_mumbai: {
     //   url: "https://polygon-mumbai.g.alchemy.com/v2/kTZxIUR6MKogwu-aarjjs5euIVls4j0j",
@@ -46,25 +60,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: '0.8.15',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-      {
         version: '0.8.20',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-      {
-        version: '0.6.12',
         settings: {
           optimizer: {
             enabled: true,
@@ -91,7 +87,16 @@ module.exports = {
       bscTestnet: BNB_SCAN_API_KEY,
       'zksync-testnet': API_KEY,
     },
-    customChains: [],
+    customChains: [
+      {
+        network: 'zksync-testnet',
+        chainId: 300,
+        urls: {
+          apiURL: 'https://block-explorer-api.sepolia.zksync.dev/api',
+          browserURL: 'https://sepolia.explorer.zksync.io/',
+        },
+      },
+    ],
   },
   gasReporter: {
     enabled: true,
