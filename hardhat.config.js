@@ -89,7 +89,7 @@ module.exports = {
       sepolia: API_KEY,
       'bsc-testnet': BNB_SCAN_API_KEY,
       bscTestnet: BNB_SCAN_API_KEY,
-      'zksync-testnet': ETHERSCAN_API_KEY,
+      'zksync-testnet': API_KEY,
     },
     customChains: [],
   },
