@@ -20,12 +20,20 @@ module.exports = {
   },
   defaultNetwork: 'hardhat',
   networks: {
+    fuji: {
+      url: 'https://api.avax-test.network/ext/C/rpc',
+      ethNetwork: 'Fuji (C-Chain)',
+      chainId: 43113,
+      gasPrice: 25000000000,
+      accounts: [PRIVATE_KEY],
+      zksync: false,
+    },
     'zksync-testnet': {
       url: 'https://sepolia.era.zksync.dev',
       ethNetwork: 'sepolia',
       chainId: 300,
       gasPrice: 20000000000,
-      accounts: [PRIVATE_KEY, PRIVATE_KEY],
+      accounts: [PRIVATE_KEY],
       zksync: true,
       verifyURL:
         'https://explorer.sepolia.era.zksync.dev/contract_verification',
