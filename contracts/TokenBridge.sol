@@ -53,6 +53,8 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
     }
 
     // _token = bnb usdt 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
+
+    // _token = avalanche fuji usdt - 0xDb8e825702562B2bC6e82aaAF6aB6E15C7D042b1
     // _toAddress = aptos user wallet address 0x87ab7d47a9b0ac84b856168b68fff06408cc5f1c691a6c5366c3ab116d76d93c
     // _amountLD = usdt 1
     // CallParams {
@@ -70,8 +72,8 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
         require(supportedTokens[_token], "TokenBridge: token is not supported");
 
         // lock token
-        _amountLD = _removeDust(_token, _amountLD);
-        _amountLD = _lockTokenFrom(_token, msg.sender, _amountLD);
+        // _amountLD = _removeDust(_token, _amountLD);
+        // _amountLD = _lockTokenFrom(_token, msg.sender, _amountLD);
 
         // add tvl
         uint64 amountSD = _LDtoSD(_token, _amountLD);
