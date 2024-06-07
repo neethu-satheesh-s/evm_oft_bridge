@@ -75,7 +75,7 @@ module.exports = async function ({
   //   console.log('contract');
   //   console.log(contract);
 
-  // await verify(contract.address, args, 'TokenBridge');
+  await verify(contract.address, args, 'TokenBridge');
 
   //   console.log('constructor args:' + contract.interface.encodeDeploy(args));
 };

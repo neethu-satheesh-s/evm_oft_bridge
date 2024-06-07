@@ -52,16 +52,16 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
         aptosChainId = _aptosChainId;
     }
 
-    // _token = bnb usdt 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
-
     // _token = avalanche fuji usdt - 0xDb8e825702562B2bC6e82aaAF6aB6E15C7D042b1
+
+    // _token = bnb usdt 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
     // _toAddress = aptos user wallet address 0x87ab7d47a9b0ac84b856168b68fff06408cc5f1c691a6c5366c3ab116d76d93c
-    // _amountLD = usdt 1
+    // _amountLD = 1000 - 0.01 amount
     // CallParams {
-    // address payable refundAddress; user wallet address - 0x4Aed70Ca724C2c268A4047A89A5d0Ee5Ee3D92ce OR 0
-    // address zroPaymentAddress; - yser wallet address - 0
+    // address payable refundAddress; user wallet address - 0x4f08fb97BB3c298A173b5B0E880928EefCaDbcDa OR 0
+    // address zroPaymentAddress; - yser wallet address - 0 - 0x0000000000000000000000000000000000000000
     // }
-    // _adapterParams - []
+    // _adapterParams - 0x OR - 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     function sendToAptos(
         address _token,
         bytes32 _toAddress,
@@ -72,8 +72,8 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
         require(supportedTokens[_token], "TokenBridge: token is not supported");
 
         // lock token
-        // _amountLD = _removeDust(_token, _amountLD);
-        // _amountLD = _lockTokenFrom(_token, msg.sender, _amountLD);
+        _amountLD = _removeDust(_token, _amountLD);
+        _amountLD = _lockTokenFrom(_token, msg.sender, _amountLD);
 
         // add tvl
         uint64 amountSD = _LDtoSD(_token, _amountLD);
@@ -150,9 +150,9 @@ contract TokenBridge is ITokenBridge, NonblockingLzApp, ReentrancyGuard {
 
     // BNB USDT : 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
 
-    // setTrustedRemoteAddress => 108  and remote aptos oft bridge 0xbd6ee7be5e61a1827647762ce4ec0c4b53b9f42a1b377a3b862bf2b1af1a019d
+    // setTrustedRemoteAddress => 108  and remote aptos oft bridge 0xa3d1a2509ee374da9962f700bf5209bd90522ed779da906d2e55cfafa0636efa
 
-    // _token = aptos usdt = 0xea33def69b4bce19afe062e48581d9bc8d7b8d11e154c007a6325f2a45146b53 = the input could be bnb usdt, need to check
+    // _token =  bnb usdt 0x70Fec95ef966aE4Eab9E3BA9c6389fbDf30F3c4a
     function registerToken(address _token) external onlyOwner {
         require(_token != address(0), "TokenBridge: invalid token address");
         require(
